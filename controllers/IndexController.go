@@ -13,3 +13,9 @@ func (i *IndexController) Test(c *gin.Context) {
 		"message": "index",
 	})
 }
+
+func (i *IndexController) Index(c *gin.Context) {
+	c.HTML(200, "index.html", gin.H{
+		"title": "Test Title",
+	})
+}
