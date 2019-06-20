@@ -1,3 +1,4 @@
 /.idea
 /*.loggi
-/.env
+/*.env
+.env
