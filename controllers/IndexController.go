@@ -12,9 +12,7 @@ type IndexController struct {
 }
 
 func (i *IndexController) Test(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message": "index",
-	})
+	i.success(c,gin.H{"message":"index"})
 }
 
 func (i *IndexController) Index(c *gin.Context) {
