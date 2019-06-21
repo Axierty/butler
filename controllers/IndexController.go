@@ -1,6 +1,9 @@
 package controllers
 
-import "github.com/gin-gonic/gin"
+import (
+	"butler/models"
+	"github.com/gin-gonic/gin"
+)
 
 var Index = &IndexController{}
 
@@ -15,7 +18,14 @@ func (i *IndexController) Test(c *gin.Context) {
 }
 
 func (i *IndexController) Index(c *gin.Context) {
+
+	userModel := &models.User{}
+
+	user := userModel.Find(1)
+	//fmt.Println(user)
+
 	c.HTML(200, "index.html", gin.H{
 		"title": "Test Title",
+		"user" : user,
 	})
 }
