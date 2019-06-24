@@ -46,6 +46,7 @@ func (i *IndexController) Update(c *gin.Context) {
 	err := userModel.UpdateById(1,dest)
 	if err != nil {
 		i.fail(c,500,err.Error())
+		return
 	}
 
 	i.success(c,gin.H{"message":"edit sucess"})

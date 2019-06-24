@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"reflect"
 	"errors"
 )
@@ -21,10 +22,11 @@ func (User) Find(id int) User {
 
 func (User) UpdateById(id int,data map[string]interface{}) error {
 	var user User
+	fmt.Println("默认初始化=>",user)
 	DB.Find(&user, id)
 
 	//通过反射判断是否为空
-	if reflect.ValueOf(user).FieldByName("").IsValid() {
+	if reflect.ValueOf(user).FieldByName("Id").Int() == 0 {
 		return errors.New("修改数据为空")
 	}
 
