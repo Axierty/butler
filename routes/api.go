@@ -13,4 +13,7 @@ func Api(Router *gin.Engine)  {
 	Router.GET("/test",Index.Test)
 
 	Router.GET("/",Index.Index)
+
+	Router.GET("/update",Index.Update)
+
 }

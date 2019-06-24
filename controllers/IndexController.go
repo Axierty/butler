@@ -27,3 +27,26 @@ func (i *IndexController) Index(c *gin.Context) {
 		"user" : user,
 	})
 }
+
+
+func (i *IndexController) Update(c *gin.Context) {
+
+	userModel := &models.User{}
+
+	data := map[string]string{
+		"name": "axxa",
+	}
+
+	dest := make(map[string]interface{})
+
+	for k,v := range data {
+		dest[k] = interface{}(v)
+	}
+
+	err := userModel.UpdateById(1,dest)
+	if err != nil {
+		i.fail(c,500,err.Error())
+	}
+
+	i.success(c,gin.H{"message":"edit sucess"})
+}

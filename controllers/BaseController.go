@@ -18,7 +18,7 @@ func (*BaseController) success(c *gin.Context, data map[string]interface{}) {
 
 func (*BaseController) fail(c *gin.Context,  code int, msg string) {
 	c.JSON(http.StatusOK, gin.H{
-		"code": 200,
+		"code": code,
 		"msg":  msg,
 		"data": "",
 	})
