@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"butler/configs"
 	"butler/models"
 	"github.com/gin-gonic/gin"
 )
@@ -18,14 +19,15 @@ func (i *LoginController) Login(c *gin.Context) {
 	password := c.PostForm("password")
 
 	if mobile == ""  || password == "" {
-		i.fail(c,500,"账号密码错误")
+		i.fail(c,configs.FAIL,"账号密码错误")
+		return
 	}
 
 	userModel := &models.User{}
 	err,_ := userModel.CheckPassword(mobile,password)
 
 	if err != nil {
-		i.fail(c,500,"账号密码错误")
+		i.fail(c,configs.FAIL,"账号密码错误")
 		return
 	}
 

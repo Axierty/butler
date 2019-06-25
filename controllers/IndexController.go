@@ -3,6 +3,7 @@ package controllers
 import (
 	"butler/models"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 var Index = &IndexController{}
@@ -24,7 +25,7 @@ func (i *IndexController) Index(c *gin.Context) {
 	users := userModel.FindAll()
 	//fmt.Println(user)
 
-	c.HTML(200, "index.html", gin.H{
+	c.HTML(http.StatusOK, "index.html", gin.H{
 		"title": "Test Title",
 		"user" : user,
 		"users" : users,
