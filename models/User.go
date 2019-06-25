@@ -1,17 +1,54 @@
 package models
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"fmt"
 	"reflect"
 	"errors"
+	"strconv"
+	"time"
 )
 
 type User struct {
 	Id        int `gorm:"primary_key"`
 	Name        string
 	Mobile      string
+	Password    string
 	CreatedAt     int
 	UpdatedAt     int
+}
+
+
+//生成token
+func (User) GenerateToken() string {
+
+	h := md5.New()
+	curtime := time.Now().Unix()
+
+	h.Write([]byte(strconv.FormatInt(curtime, 10)))
+	token := hex.EncodeToString(h.Sum(nil))
+
+	return token
+}
+
+//检查用户密码是否正确
+func (User) CheckPassword(mobile string,password string) (error,User) {
+	var user User
+	DB.Where("mobile = ?", mobile).Find(&user)
+
+	if user.Id == 0 {
+		return errors.New("未知的用户手机号"),user
+	}
+
+	h := md5.New()
+	h.Write([]byte(password))
+	passwordNew := hex.EncodeToString(h.Sum(nil))
+	if passwordNew != user.Password {
+		return errors.New("账号密码错误"),user
+	}
+
+	return nil,user
 }
 
 func (User) FindAll() []User {
@@ -39,17 +76,4 @@ func (User) UpdateById(id int,data map[string]interface{}) error {
 
 	DB.Model(&user).Updates(data)
 	return nil
-	//反射拿到user
-	//userReflect := reflect.ValueOf(user)
-	//
-	//for k, v := range data {
-	//
-	//	isExists := userReflect.FieldByName(k).Int()
-	//	if isExists == 0 {
-	//		return nil
-	//	}
-	//	user.k = v
-	//}
-	//db.Model(&user).Updates()
-
 }

@@ -16,4 +16,6 @@ func Api(Router *gin.Engine)  {
 
 	Router.GET("/update",Index.Update)
 
+
+	Router.POST("/login",Login.Login)
 }

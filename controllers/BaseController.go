@@ -10,7 +10,7 @@ type BaseController struct{}
 func (*BaseController) success(c *gin.Context, data map[string]interface{}) {
 	c.JSON(http.StatusOK, gin.H{
 		"code": 200,
-		"msg":  "ok",
+		"msg":  "请求成功",
 		"data": data,
 	})
 }
