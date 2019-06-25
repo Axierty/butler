@@ -14,6 +14,13 @@ type User struct {
 	UpdatedAt     int
 }
 
+func (User) FindAll() []User {
+	var users []User
+	DB.Find(&users)
+	return users
+}
+
+
 func (User) Find(id int) User {
 	var result User
 	DB.Where("id = ?", id).Find(&result)
