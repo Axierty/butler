@@ -1,7 +1,9 @@
 package controllers
 
 import (
+	"butler/libs"
 	"butler/models"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -13,6 +15,11 @@ type IndexController struct {
 }
 
 func (i *IndexController) Test(c *gin.Context) {
+
+	//拿到redis的连接池
+	redis := libs.GetRedisInstance().Redis
+	fmt.Println(redis)
+
 	i.success(c,gin.H{"message":"index"})
 }
 

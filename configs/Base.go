@@ -22,8 +22,8 @@ type RedisCommonConfig struct {
 	RedisHost      string
 	RedisPort      string
 	RedisPass      string
-	RedisMaxIdle   string
-	RedisMaxActive string
+	RedisMaxIdle   int
+	RedisMaxActive int
 }
 
 var AppConfig *Config
@@ -33,6 +33,7 @@ var RedisConfig *RedisCommonConfig
 func init() {
 	AppConfig = &Config{}
 	DbConfig = &DbCommonConfig{}
+	RedisConfig = &RedisCommonConfig{}
 
 	//初始化文件
 	initConfig(".env")
@@ -60,6 +61,6 @@ func initRedisConfig(conf config.Configer) {
 	RedisConfig.RedisHost = conf.DefaultString("REDIS_HOST", "127.0.0.1")
 	RedisConfig.RedisPort = conf.DefaultString("REDIS_PORT", "6357")
 	RedisConfig.RedisPass = conf.DefaultString("REDIS_PASS", "")
-	RedisConfig.RedisMaxIdle = conf.DefaultString("REDIS_MAX_IDLE", "3")
-	RedisConfig.RedisMaxActive = conf.DefaultString("REDIS_MAX_ACTIVE", "5")
+	RedisConfig.RedisMaxIdle = conf.DefaultInt("REDIS_MAX_IDLE", 3)
+	RedisConfig.RedisMaxActive = conf.DefaultInt("REDIS_MAX_ACTIVE", 5)
 }
