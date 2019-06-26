@@ -31,6 +31,9 @@ func (i *LoginController) Login(c *gin.Context) {
 		return
 	}
 
+
+
 	token := userModel.GenerateToken()
 	i.success(c,gin.H{"token": token})
 }
+
