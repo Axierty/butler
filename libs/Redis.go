@@ -7,13 +7,13 @@ import (
 )
 
 type RedisLib struct {
-	Redis  *redis.Pool
+	RedisPool  *redis.Pool
 	IsInit int
 }
 
 var RedisCore = &RedisLib{}
 
-func GetRedisInstance() *RedisLib {
+func GetRedisInstance() *redis.Pool {
 
 	if RedisCore.IsInit == 0 {
 		server := configs.RedisConfig.RedisHost + ":" + configs.RedisConfig.RedisPort
@@ -31,8 +31,8 @@ func GetRedisInstance() *RedisLib {
 			},
 		}
 
-		RedisCore.Redis = redisPool
+		RedisCore.RedisPool = redisPool
 		RedisCore.IsInit = 1
 	}
-	return RedisCore
+	return RedisCore.RedisPool
 }

@@ -1,6 +1,8 @@
 package middlewares
 
 import (
+	"butler/libs"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -22,7 +24,26 @@ func ApiToken() gin.HandlerFunc {
 			})
 			c.Abort()
 		} else {
-			c.Set("token", "11111")
+
+			//获取redis连接句柄
+			rc := libs.GetRedisInstance().Get()
+			defer rc.Close()
+
+			key := "redis#" + token
+			userId, err := rc.Do("Get", key)
+
+			if err != nil {
+				c.JSON(http.StatusOK, gin.H{
+					"code": 500,
+					"msg":  "redis获取失败",
+					"data": "",
+				})
+				c.Abort()
+			}
+
+			fmt.Println(userId)
+			c.Set("user_id", userId)
+			fmt.Println(c.Get("user_id"))
 		}
 
 		//
