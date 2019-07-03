@@ -2,8 +2,8 @@ package middlewares
 
 import (
 	"butler/libs"
-	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/gomodule/redigo/redis"
 	"net/http"
 )
 
@@ -30,7 +30,7 @@ func ApiToken() gin.HandlerFunc {
 			defer rc.Close()
 
 			key := "redis#" + token
-			userId, err := rc.Do("Get", key)
+			userId, err := redis.Int(rc.Do("Get", key))
 
 			if err != nil {
 				c.JSON(http.StatusOK, gin.H{
@@ -41,9 +41,8 @@ func ApiToken() gin.HandlerFunc {
 				c.Abort()
 			}
 
-			fmt.Println(userId)
+			//中间件中传递解析token 的用户id
 			c.Set("user_id", userId)
-			fmt.Println(c.Get("user_id"))
 		}
 
 		//

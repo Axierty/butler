@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"butler/models"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -15,10 +14,12 @@ type IndexController struct {
 
 func (i *IndexController) Test(c *gin.Context) {
 
-	user_id,_ := c.Get("user_id")
-	fmt.Println("ssss",user_id)
+	//从token中解析出user_id 强转为int
+	var _userId interface{}
+	_userId,_ = c.Get("user_id")
+	userId := _userId.(int)
 
-	i.success(c,gin.H{"message":"index"})
+	i.success(c,gin.H{"message":"index","user_id":userId})
 }
 
 func (i *IndexController) Index(c *gin.Context) {
